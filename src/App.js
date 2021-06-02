@@ -8,7 +8,7 @@ const App = () => {
     <Button>This is a primary button</Button>
     <br />
     <br />
-    <Button variant='secondary' size='large'>
+    <Button variant='secondary' size='large' disabled>
       This is a large secondary button
     </Button>
     <br />

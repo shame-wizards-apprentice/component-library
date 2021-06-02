@@ -2,6 +2,45 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { defaultTheme, typeScale } from '../../utils';
 
+const VARIANTS = {
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    TERTIARY: 'tertiary',
+  };
+  
+  const SIZES = {
+    DEFAULT: 'default',
+    SMALL: 'small',
+    LARGE: 'large',
+  };
+
+  const setDisabledStyles = ({ disabled, variant }) => {
+    if (disabled && variant === VARIANTS.PRIMARY) {
+      return css`
+        background: none !important;
+        color: ${defaultTheme.textColorDisabled} !important;
+        border: 1px solid ${defaultTheme.textColorDisabled} !important;
+        cursor: not-allowed;
+        filter: none !important;
+      `;
+    } else if (disabled && variant === VARIANTS.SECONDARY) {
+      return css`
+        background: ${defaultTheme.backgroundColorDisabled} !important;
+        color: ${defaultTheme.textColorDisabled} !important;
+        border: 1px solid ${defaultTheme.backgroundColorDisabled} !important;
+        cursor: not-allowed;
+        filter: none !important;
+      `;
+    } else if (disabled && variant === VARIANTS.TERTIARY) {
+      return css`
+        background: ${defaultTheme.backgroundColorDisabled} !important;
+        color: ${defaultTheme.textColorDisabled} !important;
+        cursor: not-allowed;
+        filter: none !important;
+      `;
+    }
+  };
+
 const StyledButton = styled.button`
   border-radius: 50px;
   display: inline-block;
@@ -81,18 +120,11 @@ ${(props) =>
     font-size: ${typeScale.header3};
     padding: 16px 24px;
   `}
+  ${setDisabledStyles}
   `
-const VARIANTS = {
-    PRIMARY: 'primary',
-    SECONDARY: 'secondary',
-    TERTIARY: 'tertiary',
-  };
+
+
   
-  const SIZES = {
-    DEFAULT: 'default',
-    SMALL: 'small',
-    LARGE: 'large',
-  };
   const dropShadow = 'drop-shadow(0px 5px 5px  rgba(0, 0, 255, 0.25));';
   const tertiaryDropShadow = 'drop-shadow(0px 4px 3px rgba(0, 0, 255, 0.7));';
 
@@ -109,12 +141,14 @@ export const Button = (props) => {
 Button.propTypes = {
     children: PropTypes.node.isRequired,
     variant: PropTypes.oneOf(Object.values(VARIANTS)),
+    disabled: PropTypes.bool,
     size: PropTypes.oneOf(Object.values(SIZES)),
     href: PropTypes.string,
   };
   
   Button.defaultProps = {
     variant: VARIANTS.PRIMARY,
+    disabled: false,
     size: SIZES.DEFAULT,
     href: undefined,
   };
